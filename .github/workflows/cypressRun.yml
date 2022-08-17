@@ -1,0 +1,21 @@
+name: Run Cypress tests
+
+on:
+  workflow_dispatch:
+
+concurrency:
+  group: e2e-run
+  cancel-in-progress: true
+
+jobs:
+  build:
+  runs-on: ubuntu-latest
+  steps:
+    - uses: actions/checkout@v2
+
+    - name: Install packages
+      run: npm install
+      timeout-minutes: 3
+
+    - name: Run Tests
+      run: npm run cypress:run
