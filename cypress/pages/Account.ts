@@ -16,7 +16,6 @@ class Account {
     const currentDate = moment().format('YYYYMMDD')
     const currentTime = moment().format('hhmmss')
     const newEmail = `frameio-testing+${currentDate}-${currentTime}@example.com`
-    // tester@tester123.12345.com
     process.env.email = newEmail
     return newEmail
   }
