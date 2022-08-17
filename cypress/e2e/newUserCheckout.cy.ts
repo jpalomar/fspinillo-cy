@@ -1,5 +1,4 @@
-import {Account, HomePage, MyAccount, Personal, AddressInfo} from '../pages/index'
-import {accountDetails} from '../fixtures/account'
+import {Account, HomePage, MyAccount, Personal, AddressInfo, Checkout} from '../pages/index'
 
 describe('New User Checkout', () => {
   describe('Create New Account', () => {
@@ -43,18 +42,32 @@ describe('New User Checkout', () => {
       Account.login(process.env.email, process.env.pass)
       cy.visit('http://automationpractice.com/index.php?controller=authentication&back=my-account')
       MyAccount.myAddresses.click()
-      AddressInfo.phoneNumber.should('have.text', '(719) 266-2837')
-      AddressInfo.streetAddress.should('have.text','20 Ingram Street')
+      AddressInfo.phoneNumber.should('include.text', '(719) 266-2837')
+      AddressInfo.streetAddress.should('include.text','20 Ingram Street')
     })
   })
 
   describe('Purchasing', () => {
-    before('Log in', () => {
+    beforeEach('Load Home Page', () => {
       Account.login(process.env.email, process.env.pass)
       cy.visit('http://automationpractice.com/index.php')
     })
-    it('Buy dress from home page', () => {
 
+    it('Buy Dress on Home Page', () => {
+      HomePage.dressAddCart.click()
+      HomePage.closeModal.click()
+      HomePage.viewCart.click()
+      Checkout.completeCheckout()
+      Checkout.confirmOrderHeading.should('have.text', 'Order confirmation')
+    })
+
+    it('Buy Dress from Search', () => {
+      HomePage.searchField.type('Faded Short Sleeve T-shirts{enter}')
+      HomePage.addCartButton.click()
+      HomePage.closeModal.click()
+      HomePage.viewCart.click()
+      Checkout.completeCheckout()
+      Checkout.confirmOrderHeading.should('have.text', 'Order confirmation')
     })
   })
 
