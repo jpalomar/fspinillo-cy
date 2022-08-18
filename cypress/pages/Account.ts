@@ -1,5 +1,4 @@
 import moment from 'moment'
-import {accountDetails} from '../fixtures/account'
 
 class Account {
 
