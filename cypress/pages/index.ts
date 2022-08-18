@@ -1,4 +1,4 @@
-import Account from './account'
+import Account from './Account'
 import HomePage from './homePage'
 import MyAccount from './myAccount'
 import Personal from './personalInfo'
