@@ -5,16 +5,36 @@ on:
 concurrency:
   group: e2e-run
   cancel-in-progress: true
-  
+
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      
+      - uses: actions/checkout@v3
+
       - name: Install packages
         run: npm install
         timeout-minutes: 3
-      
+
       - name: Run Tests
         run: npm run cypress:run
+
+      - name: upload screenshots
+        uses: actions/upload-artifact@v3
+        if: failure()
+        with:
+          retention-days: 14
+          name: cypress-screenshots--${{ github.sha }}
+          path: |
+            cypress/screenshots
+
+      - name: upload videos
+        uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          retention-days: 14
+          # 'warn' or 'error' are also available, defaults to `warn`
+          if-no-files-found: ignore
+          name: cypress-videos--${{ github.sha }}
+          path: |
+            cypress/videos
