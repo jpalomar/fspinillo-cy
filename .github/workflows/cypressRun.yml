@@ -1,5 +1,8 @@
 name: Run Cypress Tests
 on:
+  push:
+    branches:
+      - main
   workflow_dispatch:
 
 concurrency:
@@ -7,7 +10,7 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  build:
+  e2e-run:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
